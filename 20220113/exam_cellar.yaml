@@ -1,0 +1,120 @@
+swagger: "2.0"
+
+info:
+  version: "1.0"
+  title: "SimpleCellar"
+  description: "A web-based application for the management of a wine cellar"
+
+host: "[YOUR_PROJECT_ID].appspot.com"
+basePath: "/api/v1"
+
+schemes:
+  - https
+
+paths:
+  /clean:
+    get:
+      description: "Clean the database"
+      responses:
+        200: 
+          description: "Ok"
+          
+  /slot/{slot_num}/:
+    parameters:
+      - name: slot_num
+        in: path
+        required: true
+        description: "Number of the selected slot"
+        type: integer
+        minimum: 0
+        maximum: 9
+    post:
+      description: "Insert a new label to the cellar"
+      operationId: "PostSlot"
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: NewSlot
+          required: True
+          description: "Detail of the inserted label"
+          schema:
+            $ref: "#/definitions/SlotDetail"
+      responses:
+        201:
+          description: "Success."
+          schema:
+            $ref: '#/definitions/Label'
+        400:
+          description: "Generic error."
+        409:
+          description: "Conflict."
+    get:
+      description: "Get info of the selected slot"
+      operationId: "GetSlot"
+      responses:
+        200:
+          description: "Return the details of the selected slot"
+          schema:
+            $ref: "#/definitions/SlotDetail"
+        404:
+          description: "Generic error."
+
+definitions:
+  Label:
+    type: object
+    required:
+      - name
+      - type
+      - producer
+      - year
+      - price
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+        enum: ['sparkling', 'white', 'red', 'sweet']
+      producer:
+        type: string
+      year:
+        type: integer
+        minimum: 1900
+        maximum: 2021
+      price:
+        type: number
+        format: double
+        minimum: 0
+    example:
+      name: 'Sassicaia Bolgheri' 
+      type: 'red'
+      producer: 'Tenuta San Guido'
+      year: 2010
+      price: 850.00
+
+  SlotDetail:
+    type: object
+    required:
+      - label
+      - quantity
+      - minimum
+    properties:
+      label:
+        $ref: "#/definitions/Label"
+      quantity:
+        type: integer
+        minimum: 6
+        maximum: 14
+      minimum:
+        type: integer
+        minimum: 3
+        maximum: 8
+    example:
+      label:
+        name: 'Collection 1985' 
+        type: 'sparkling'
+        producer: 'Krug'
+        year: 1985
+        price: 1945.00
+      quantity: 10
+      minimum: 6

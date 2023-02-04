@@ -1,0 +1,24 @@
+{
+  "0": {
+    "label": {
+      "name": "Sassicaia Bolghieri",
+      "type": "red",
+      "producer": "Tenuta San Guido",
+      "year": 2010,
+      "price": 850.00
+    },
+    "quantity": 9,
+    "minimum": 7
+  },
+  "1": {
+    "label": {
+      "name": "Collection 1985",
+      "type": "sparkling",
+      "producer": "Krug",
+      "year": 1985,
+      "price": 1945.00
+    },
+    "quantity": 10,
+    "minimum": 6
+  }
+}
