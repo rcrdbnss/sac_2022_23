@@ -60,6 +60,26 @@ paths:
         404:
           description: "Generic error."
 
+  /labels/{type}/:
+    parameters:
+      - name: type
+        in: path
+        required: true
+        description: ""
+        type: string
+        enum: ['sparkling', 'white', 'red', 'sweet']
+
+    get:
+      description: ""
+      operationId: "GetTypeLabels"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/LabelsList"
+        404:
+          description: "Generic error."
+
 definitions:
   Label:
     type: object
@@ -86,11 +106,16 @@ definitions:
         format: double
         minimum: 0
     example:
-      name: 'Sassicaia Bolgheri' 
+      name: 'Sassicaia Bolgheri'
       type: 'red'
       producer: 'Tenuta San Guido'
       year: 2010
       price: 850.00
+
+  LabelsList:
+    type: array
+    items:
+      $ref: "#/definitions/Label"
 
   SlotDetail:
     type: object

@@ -1,0 +1,9 @@
+td {
+    padding: 6px;
+    min-width: 150px;
+    text-align: left;
+}
+
+td.na {
+    background-color: lightgrey;
+}

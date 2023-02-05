@@ -21,3 +21,5 @@ requests.post(
 )
 
 print(requests.get(f'{basePath}/slot/2').json())
+
+print(requests.get(f'{basePath}/labels/red').json())

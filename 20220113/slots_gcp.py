@@ -35,6 +35,20 @@ class Slots:
 		s = self.__db.collection('slots').document(n).get()
 		return s.to_dict() if s.exists else None
 
+	def get_all(self):
+		return [s.to_dict() for s in self.__db.collection('slots').stream()]
+
+	def get_labels(self, type):
+		if type not in ['sparkling', 'white', 'red', 'sweet']:
+			return None
+		slots = self.get_all()
+		ls = []
+		for s in slots:
+			label = s['label']
+			if label['type'] == type:
+				ls.append(label)
+		return ls
+
 	def delete(self, n):
 		self.__db.collection('slots').document(n).delete()
 

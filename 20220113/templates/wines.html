@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Wines</title>
+	<link rel="stylesheet" href="/static/wines.css">
+</head>
+<body>
+<h1>Wines</h1>
+
+{% for t in ['sparkling', 'red', 'white', 'sweet'] %}
+	{% if wines[t] %}
+		<h2>{{ t.title() }}</h2>
+		<table>
+		{% for w in wines[t] %}
+			{% if w['quantity'] == 0 %}
+				{% set cls = 'na' %}
+			{% endif %}
+		<tr>
+			<td>{{ w['label']['name'] }}</td>
+			<td>{{ w['label']['price'] }}</td>
+			<td class="{{ cls }}">{{ w['quantity'] }}</td>
+		</tr>
+		{% endfor %}
+		</table>
+	{% endif %}
+{% endfor %}
+
+</body>
+</html>

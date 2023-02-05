@@ -66,7 +66,6 @@ class CleanResource(Resource):
 
 
 class SlotResource(Resource):
-
 	def get(self, slot_num):
 		if 0 <= int(slot_num) <= 9:
 			s = dao.get(slot_num)
@@ -85,7 +84,16 @@ class SlotResource(Resource):
 		return None, 201
 
 
+class LabelsListResource(Resource):
+	def get(self, type):
+		ls = dao.get_labels(type)
+		if ls is not None:
+			return ls, 200
+		return None, 404
+
+
 api.add_resource(SlotResource, f'/{basePath}/slot/<string:slot_num>')
+api.add_resource(LabelsListResource, f'/{basePath}/labels/<string:type>')
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=8080, debug=True)
