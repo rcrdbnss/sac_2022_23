@@ -3,9 +3,7 @@ from flask_restful import Resource, Api
 
 from slots import Slots
 
-app = Flask(__name__,
-						static_url_path='/static',
-						static_folder='static')
+app = Flask(__name__, static_url_path='/static', static_folder='static')
 
 api = Api(app)
 basePath = 'api/v1'
@@ -59,6 +57,14 @@ def validate_label(label_data):
 	return True
 
 
+def validate_slot_num(slot_num):
+	try:
+		n = int(slot_num)
+		return 0 <= n <= 9
+	except:
+		return False
+
+
 class CleanResource(Resource):
 	def get(self):
 		dao.clean()
@@ -67,29 +73,31 @@ class CleanResource(Resource):
 
 class SlotResource(Resource):
 	def get(self, slot_num):
-		if 0 <= int(slot_num) <= 9:
-			s = dao.get(slot_num)
-			return s, 200
-		else:
+		if not validate_slot_num(slot_num):
 			return None, 404
+		s = dao.get(slot_num)
+		if s is None:
+			return None, 404
+		return s, 200
 
 	def post(self, slot_num):
+		if not validate_slot_num(slot_num):
+			return None, 400
 		data = request.json
 		if not validate_slot(data):
 			return None, 400
 		if dao.get(slot_num) is not None:
 			return None, 409
-		l = data['label']
-		dao.add(slot_num, l['name'], l['type'], l['producer'], l['year'], l['price'], data['quantity'], data['minimum'])
+		dao.add(slot_num, **data['label'])
 		return None, 201
 
 
 class LabelsListResource(Resource):
 	def get(self, type):
-		ls = dao.get_labels(type)
-		if ls is not None:
-			return ls, 200
-		return None, 404
+		ls = dao.get_type(type)
+		if ls is None:
+			return None, 404
+		return [l['label'] for l in ls], 200
 
 
 api.add_resource(SlotResource, f'/{basePath}/slot/<string:slot_num>')

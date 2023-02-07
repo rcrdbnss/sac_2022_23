@@ -1,0 +1,1 @@
+gcloud functions deploy update_db --runtime=python39 --trigger-event="providers/cloud.firestore/eventTypes/document.write" --trigger-resource="projects/${PROJECT_ID}/databases/(default)/documents/wine_orders/{timestamp}"
