@@ -1,0 +1,15 @@
+td {
+    min-width: 100px;
+}
+
+td.past {
+    background-color: darkgrey;
+}
+
+td.incoming {
+    background-color: lightgreen;
+}
+
+td.future {
+    background-color: lightskyblue;
+}

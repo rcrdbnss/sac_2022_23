@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Plants in my garden</title>
+	<link rel="stylesheet" href="/static/plants.css" >
+</head>
+<body>
+{% set ks = plants.keys()|sort %}
+<table>
+	{% for k in ks %}
+		{% for p in plants[k] %}
+		<tr>
+			{% set pinfo = plants[k][p] %}
+			<td>{{ pinfo['plant']['name'] }}</td>
+			<td>{{ pinfo['num'] }}</td>
+			<td class="{{ pinfo['plant']['sowing-cls'] }}">{{ k }}</td>
+			<td class="{{ pinfo['plant']['sprout-time-cls'] }}">{{ pinfo['plant']['sprout-time'].strftime('%Y-%m-%d') }}</td>
+			<td class="{{ pinfo['plant']['full-growth-cls'] }}">{{ pinfo['plant']['full-growth'].strftime('%Y-%m-%d') }}</td>
+		</tr>
+		{% endfor %}
+	{% endfor %}
+</table>
+</body>
+</html>

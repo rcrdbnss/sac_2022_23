@@ -1,0 +1,20 @@
+{
+  "2022-02-23": {
+    "plant": {
+      "name": "Bonsai",
+      "sprout-time": "3 months",
+      "full-growth": "2 years",
+      "edible": false
+    },
+    "num": 3
+  },
+  "2021-02-09": {
+    "plant": {
+      "name": "Chili Pepper",
+      "sprout-time": "3 weeks",
+      "full-growth": "3 months",
+      "edible": true
+    },
+    "num": 2
+  }
+}

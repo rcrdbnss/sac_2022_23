@@ -1,0 +1,96 @@
+swagger: "2.0"
+
+info:
+  version: "1.0"
+  title: "Smart Garden"
+  description: "Engineering your inner gardener"
+
+host: "[YOUR_PROJECT_ID].appspot.com"
+basePath: "/api/v1"
+
+schemes:
+  - https
+
+paths:
+  /garden/plant/{date}/{plant}:
+    parameters:
+      - name: date
+        in: path
+        required: true
+        description: "Planting date"
+        type: string
+        format: date
+      - name: plant
+        in: path
+        required: true
+        description: "Name of the plant"
+        type: string
+        minimum: 3
+        maximum: 20
+    post:
+      description: "Insert a new plant to the smart garden"
+      operationId: "PostPlanted"
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: PlantInfo
+          required: True
+          description: "Planted plant details"
+          schema:
+            $ref: "#/definitions/PlantedInfo"
+      responses:
+        201:
+          description: "Success."
+        400:
+          description: "Generic error."
+        409:
+          description: "Conflict. The user has already planted a similar plant on the same date"
+    get:
+      description: "Get infos of the planted"
+      operationId: "GetPlanted"
+      responses:
+        200:
+          description: "Return the Plant Infos"
+          schema:
+            $ref: "#/definitions/PlantedInfo"
+        404:
+          description: "Generic error."
+
+definitions:
+  PlantedInfo:
+    type: object
+    properties:
+      plant:
+        $ref: "#/definitions/PlantDetails"
+      num:  
+        type: number
+        format: integer
+        minimum: 1
+    example:
+      plant:
+        name: 'Bonsai'
+        sprout-time: "3 months"
+        full-growth: "2 years"
+        edible: false
+      num: 3
+    
+  PlantDetails:
+    type: object
+    properties:
+      name:
+        type: string
+        minimum: 3
+      sprout-time:
+        type: string
+        minimum: 5
+      full-growth:
+        type: string
+        minimum: 5
+      edible:
+        type: boolean
+    example:
+      name: 'Chili Pepper'
+      sprout-time: "3 weeks"
+      full-growth: "3 months"
+      edible: true
