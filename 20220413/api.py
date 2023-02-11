@@ -43,7 +43,10 @@ def val_car_data(data) -> bool:
 		return False
 
 	if not isinstance(data['price'], float):
-		return False
+		if isinstance(data['price'], int):
+			data['price'] = float(data['price'])
+		else:
+			return False
 
 	if not isinstance(data['used'], bool):
 		return False
@@ -111,10 +114,10 @@ class UserRes(Resource):
 
 		u = dao.get_user(data['email'])
 		if u is not None:
-			for s in u['selling'].keys():  # { uuid: ref }
+			for s in u['selling']: #.keys():  # { uuid: ref }
 				selling_ids.append(s)
 
-		data['selling'] = selling_ids
+		data['selling'] = list(set(selling_ids))
 		dao.add_user(**data)
 		return None, 201
 

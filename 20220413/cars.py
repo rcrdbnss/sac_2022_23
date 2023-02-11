@@ -21,16 +21,18 @@ class Cars:
 		})
 
 	def add_user(self, email, name, surname, selling: list):
-		selling_refs = {}
+		# selling_refs = {}
+		selling_refs = []
 		for s in selling:
 			c = self.get_car_ref(s)
 			if c.get().exists:
-				selling_refs[s] = c
+				# selling_refs[s] = c
+				selling_refs.append(c)
 
 		self.db.collection('users').document(email).set({
 			'name': name,
 			'surname': surname,
-			'selling': selling_refs
+			'selling': selling
 		})
 
 	def populate_db(self, cars_file, users_file):
