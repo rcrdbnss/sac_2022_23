@@ -1,0 +1,20 @@
+{
+  "111" : {
+    "make": "Alfa Romeo",
+    "model": "Giulia",
+    "cc": 2200,
+    "cv": 160,
+    "engine": "diesel",
+    "price": 40000,
+    "used": false
+  },
+  "222" : {
+    "make": "Ford",
+    "model": "Fiesta",
+    "cc": 2200,
+    "cv": 160,
+    "engine": "petrol",
+    "price": 12000,
+    "used": false
+  }
+}

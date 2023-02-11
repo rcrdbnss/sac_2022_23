@@ -1,0 +1,85 @@
+swagger: "2.0"
+
+info:
+  version: "1.0"
+  title: "Car Marketplace"
+  description: "Un servizio online per la compravendita di automobili nuove ed usate"
+
+host: "[YOUR_PROJECT_ID].appspot.com"
+basePath: "/api/v1"
+
+schemes:
+  - https
+
+paths:
+  /car/{car-id}:
+    parameters:
+      - name: car-id
+        in: path
+        required: true
+        description: "Identifier of the car"
+        type: string
+        format: uuid
+    post:
+      description: "Post a new announcement on the website"
+      operationId: "PostCar"
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: CarDetails
+          required: True
+          description: "Details of the car"
+          schema:
+            $ref: "#/definitions/CarDetails"
+      responses:
+        201:
+          description: "Success."
+        400:
+          description: "Generic error."
+        409:
+          description: "Conflict. A car with the same ID is already inserted."
+    get:
+      description: "Get information of the car"
+      operationId: "GetCar"
+      responses:
+        200:
+          description: "Returns the car details"
+          schema:
+            $ref: '#/definitions/CarDetails'
+        404:
+          description: "Generic error."
+
+definitions:
+  CarDetails:
+    type: object
+    properties:
+      make:
+        type: string
+        minLength: 3
+      model:
+        type: string
+        minLength: 3
+      cc:
+        type: number
+        format: int32
+      cv:
+        type: number
+        format: int32
+        minimum: 59
+      engine:
+        type: string
+        enum: ['diesel', 'petrol', 'hybrid', 'electric']
+      price:
+        type: number
+        format: float
+      used:
+        type: boolean
+    example: 
+      make: 'Alfa Romeo' 
+      model: 'Giulia'
+      cc: 2200
+      cv: 160
+      engine: 'diesel'
+      price: 40000
+      used: False

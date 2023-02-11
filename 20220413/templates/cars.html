@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Explore cars</title>
+	<link rel="stylesheet" href="static/cars.css">
+</head>
+<body>
+<h1>Explore cars</h1>
+<form method="post">
+	{{ form.make.label }}
+	{{ form.make }}
+	<br/>
+	{{ form.max_cv.label }}
+	{{ form.max_cv }}
+	<br/>
+	{{ form.max_price.label }}
+	{{ form.max_price }}
+	<br/>
+	{{ form.used.label }}
+	{{ form.used }}
+	<br/>
+	<input type="submit" value="Search">
+</form>
+<br/>
+
+{% if cars %}
+	<h2>Resulting cars</h2>
+	<table>
+		<th>Maker</th>
+		<th>Model</th>
+		<th>CC</th>
+		<th>CV</th>
+		<th>Engine</th>
+		<th>Price</th>
+		<th>Used?</th>
+		{% for c in cars.keys() %}
+			<tr>
+				{% for k in ['make', 'model', 'cc', 'cv', 'engine', 'price', 'used'] %}
+					<td>{{ cars[c][k] }}</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+{% endif %}
+</body>
+</html>

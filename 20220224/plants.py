@@ -7,7 +7,6 @@ class Plants:
 
 	def __init__(self):
 		self.__db = firestore.Client()
-		self.slots = {}
 		self.__populate_db('plants.json')
 
 	def add(self, date, plant, num):

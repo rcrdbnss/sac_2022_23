@@ -1,0 +1,12 @@
+{
+  "riccardobenassi@gmail.com": {
+    "name": "Riccardo",
+    "surname": "Benassi",
+    "selling": ["222"]
+  },
+  "johndoe@gmail.com": {
+    "name": "John",
+    "surname": "Doe",
+    "selling": ["111"]
+  }
+}
