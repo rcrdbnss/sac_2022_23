@@ -1,0 +1,144 @@
+swagger: "2.0"
+
+info:
+  version: "1.0"
+  title: "SAC Leagues"
+  description: "Un servizio per la realizzazione di tornei di calcio a 6"
+
+host: "[YOUR_PROJECT_ID].appspot.com"
+basePath: "/api/v1"
+
+schemes:
+  - https
+
+paths:
+  /league/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: "Name of the league"
+        type: string
+        minimum: 5
+        maximum: 64
+    post:
+      description: "Create a new league"
+      operationId: "PostLeague"
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: LeagueInfo
+          required: True
+          description: "Details the league"
+          schema:
+            $ref: "#/definitions/LeagueInfo"
+      responses:
+        201:
+          description: "Success."
+          schema:
+            $ref: '#/definitions/LeagueDetail'
+        400:
+          description: "Generic error."
+        409:
+          description: "Conflict. A league with the same name for the same date is already in the database."
+    get:
+      description: "Get information of the league"
+      operationId: "GetLeague"
+      responses:
+        200:
+          description: "Returns the league details"
+          schema:
+            $ref: '#/definitions/LeagueDetail'
+        404:
+          description: "Generic error."
+
+definitions:
+  LeagueInfo:
+    type: object
+    properties:
+      start_date:
+        type: string
+        format: date
+      teams:
+        type: array
+        minimum: 8
+        maximum: 8
+        items:
+          type: string
+          minimum: 2
+          maximum: 64
+    example: 
+      start_date: '2022-06-15' 
+      teams:
+        - "Alpha"
+        - "Bravo"
+        - "Charlie"
+        - "Delta"
+        - "Echo"
+        - "Foxtrot"
+        - "Golf"
+        - "Hotel"
+  LeagueDetail:
+    type: object
+    properties:
+      start_date:
+        type: string
+        format: date
+      group_a:
+        type: array
+        minimum: 6
+        maximum: 6
+        items:
+          type: array
+          minimum: 2
+          maximum: 2
+          items:
+            type: string
+            minimum: 2
+            maximum: 64
+      group_b:
+        type: array
+        minimum: 6
+        maximum: 6
+        items:
+          type: array
+          minimum: 2
+          maximum: 2
+          items:
+            type: string
+            minimum: 2
+            maximum: 64
+      finals:
+        type: array
+        minimum: 3
+        maximum: 3
+        items:
+          type: array
+          minimum: 2
+          maximum: 2
+          items:
+            type: string
+            minimum: 2
+            maximum: 64
+    example: 
+      start_date: '2022-06-15' 
+      group_a:
+        - ["Alpha", "Bravo"]
+        - ["Charlie", "Delta"]
+        - ["Alpha", "Charlie"]
+        - ["Bravo", "Delta"]
+        - ["Alpha", "Delta"]
+        - ["Bravo", "Charlie"] 
+      group_b:
+        - ["Echo", "Foxtrot"]
+        - ["Golf", "Hotel"]
+        - ["Echo", "Golf"]
+        - ["Foxtrot", "Hotel"]
+        - ["Echo", "Hotel"]
+        - ["Foxtrot", "Golf"]
+      finals:
+        - ["First_Place_A", "Second_Place_B"]
+        - ["Second_Place_A", "First_Place_B"]
+        - ["Winner_Semi_1", "Winner_Semi_2"]
+        
