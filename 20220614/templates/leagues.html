@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Leagues</title>
+</head>
+<body>
+<h1>Leagues:</h1>
+{{ leagues }}
+<ul>
+  {% for l in leagues %}
+		<li>
+			<a href="/league/{{ l }}">{{ l }}</a>
+		</li>
+	{% endfor %}
+</ul>
+</body>
+</html>

@@ -66,8 +66,15 @@ class Leagues:
 		else:
 			return None
 
+	def get_all_leagues(self):
+		ls = []
+		for doc in self.db.collection('leagues').stream():
+			ls.append(doc.id)
+		return ls
+
 	def get_team(self, league_name, team):
-		pass
+		t = self.db.collection('teams').document(league_name).get([team])
+		return t.to_dict() if t.exists else None
 
 	def add_team(self, league_name, team, captain, players):
 		self.db.collection('teams').document(league_name).set({

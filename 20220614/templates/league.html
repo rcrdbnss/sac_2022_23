@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>League details</title>
+</head>
+<body>
+<h1>Group A</h1>
+<table>
+	{% for match in group_a %}
+		<tr><td>{{ match[0] }}</td><td>{{ match[1] }}</td></tr>
+	{% endfor %}
+</table>
+
+<h1>Group B</h1>
+<table>
+	{% for match in group_b %}
+		<tr><td>{{ match[0] }}</td><td>{{ match[1] }}</td></tr>
+	{% endfor %}
+</table>
+
+<h1>Finals</h1>
+<table>
+	{% for match in finals %}
+		<tr><td>{{ match[0] }}</td><td>{{ match[1] }}</td></tr>
+	{% endfor %}
+</table>
+
+</body>
+</html>
