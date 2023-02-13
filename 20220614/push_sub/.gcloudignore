@@ -5,3 +5,4 @@ __pycache__/
 .env/
 /setup.cfg
 credentials.json
+*.sh

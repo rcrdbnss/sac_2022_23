@@ -1,0 +1,225 @@
+{
+	"oldValue": {
+		"createTime": "2023-02-13T11:59:53.131817Z",
+		"fields": {
+			"group_a": {
+				"mapValue": {
+					"fields": {
+						"0": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "2"
+									},
+									{
+										"integerValue": "0"
+									}
+								]
+							}
+						},
+						"1": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "1"
+									},
+									{
+										"integerValue": "0"
+									}
+								]
+							}
+						},
+						"2": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "3"
+									},
+									{
+										"integerValue": "1"
+									}
+								]
+							}
+						},
+						"3": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "1"
+									},
+									{
+										"integerValue": "2"
+									}
+								]
+							}
+						},
+						"4": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "0"
+									},
+									{
+										"integerValue": "2"
+									}
+								]
+							}
+						}
+					}
+				}
+			},
+			"group_b": {
+				"mapValue": {
+					"fields": {
+						"1": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "1"
+									},
+									{
+										"integerValue": "0"
+									}
+								]
+							}
+						},
+						"2": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "3"
+									},
+									{
+										"integerValue": "2"
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"name": "projects/rbenassi-20220614/databases/(default)/documents/scores/G7League",
+		"updateTime": "2023-02-13T12:46:09.302607Z"
+	},
+	"updateMask": {
+		"fieldPaths": [
+			"group_a.5"
+		]
+	},
+	"value": {
+		"createTime": "2023-02-13T11:59:53.131817Z",
+		"fields": {
+			"group_a": {
+				"mapValue": {
+					"fields": {
+						"0": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "2"
+									},
+									{
+										"integerValue": "0"
+									}
+								]
+							}
+						},
+						"1": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "1"
+									},
+									{
+										"integerValue": "0"
+									}
+								]
+							}
+						},
+						"2": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "3"
+									},
+									{
+										"integerValue": "1"
+									}
+								]
+							}
+						},
+						"3": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "1"
+									},
+									{
+										"integerValue": "2"
+									}
+								]
+							}
+						},
+						"4": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "0"
+									},
+									{
+										"integerValue": "2"
+									}
+								]
+							}
+						},
+						"5": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "1"
+									},
+									{
+										"integerValue": "1"
+									}
+								]
+							}
+						}
+					}
+				}
+			},
+			"group_b": {
+				"mapValue": {
+					"fields": {
+						"1": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "1"
+									},
+									{
+										"integerValue": "0"
+									}
+								]
+							}
+						},
+						"2": {
+							"arrayValue": {
+								"values": [
+									{
+										"integerValue": "3"
+									},
+									{
+										"integerValue": "2"
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"name": "projects/rbenassi-20220614/databases/(default)/documents/scores/G7League",
+		"updateTime": "2023-02-13T12:46:15.163279Z"
+	}
+}
