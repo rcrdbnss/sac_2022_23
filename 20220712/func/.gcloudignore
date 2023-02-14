@@ -1,0 +1,8 @@
+.gcloudignore
+.git
+.gitignore
+.env/
+/setup.cfg
+credentials.json
+*.sh
+*.pdf

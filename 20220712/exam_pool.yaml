@@ -1,0 +1,128 @@
+swagger: "2.0"
+
+info:
+  version: "1.0"
+  title: "Pool Reservation System"
+  description: "A web-based application for the management of the access to a swimming pool "
+
+host: "[YOUR_PROJECT_ID].appspot.com"
+basePath: "/api/v1"
+
+schemes:
+  - https
+
+paths:
+  /clean:
+    get:
+      description: "Clean the database"
+      responses:
+        200: 
+          description: "Ok"
+          
+  /pool/{user}/{date}:
+    parameters:
+      - name: user
+        in: path
+        required: true
+        description: "UUID of the user"
+        type: string
+        format: uuid
+      - name: date
+        in: path
+        required: true
+        description: "date"
+        type: string
+        format: date
+    post:
+      description: "Insert a new reservation"
+      operationId: "PostReservation"
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: PoolReservation
+          required: True
+          description: "Detail of the reservation"
+          schema:
+            $ref: "#/definitions/Reservation"
+      responses:
+        201:
+          description: "Success."
+          schema:
+            $ref: '#/definitions/ReservationDetail'
+        400:
+          description: "Generic error."
+        409:
+          description: "Conflict."
+        412:
+          description: "No lanes available"
+    get:
+      description: "Get info of the reservation"
+      operationId: "GetReservation"
+      responses:
+        200:
+          description: "Return the reservation for the current user in the selected date"
+          schema:
+            $ref: "#/definitions/ReservationDetail"
+        404:
+          description: "Generic error."
+
+definitions:
+  Reservation:
+    type: object
+    required:
+      - time
+    properties:
+      time:
+        type: string
+        enum: ['08-10', '10-12', '12-14', '14-16', '16-18', '18-20']
+      others:
+        type: array
+        items:
+          $ref: "#/definitions/ReservationItem"
+    example:
+      time: '08-10'
+      others:
+       - date: '2021-06-19'
+         time: '10-12'
+       - date: '2021-06-20'
+         time: '14-16'
+  ReservationDetail:
+    type: object
+    required:
+      - reservations
+    properties:
+      reservations:
+        type: array
+        items:
+          $ref: "#/definitions/ReservationItem"
+    example:
+      reservations:
+        - date: '2021-06-18'
+          time: '08-10'
+          lane: 4
+        - date: '2021-06-19'
+          time: '10-12'
+          lane: 4
+  ReservationItem:
+    type: object
+    required:
+      - date
+      - time
+    properties:
+      date:
+        type: string
+        format: datetime
+      time:
+        type: string
+        enum: ['08-10', '10-12', '12-14', '14-16', '16-18', '18-20']
+      lane:
+        type: integer
+        minimum: 1
+        maximum: 8
+    example:
+      - date: '2021-06-19'
+        time: '14-16'
+      - date: '2021-06-18'
+        time: '08-10'
+        lane: 4
