@@ -1,3 +1,3 @@
 cp ../dao.py .
-gcloud app deploy
+gcloud app deploy api.yaml
 rm dao.py

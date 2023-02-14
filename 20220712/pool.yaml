@@ -66,6 +66,30 @@ paths:
             $ref: "#/definitions/ReservationDetail"
         404:
           description: "Generic error."
+    
+  /pool/rsvs/{date}/{time}:
+    parameters:
+    - name: date
+      in: path
+      required: true
+      description: "date"
+      type: string
+      format: date
+    - name: time
+      in: path
+      required: true
+      type: string
+      enum: ['08-10', '10-12', '12-14', '14-16', '16-18', '18-20']
+    get:
+      description: ""
+      operationId: "GetReservationState"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ReservationState"
+        404:
+          description: "Generic error."
 
 definitions:
   Reservation:
@@ -126,3 +150,17 @@ definitions:
       - date: '2021-06-18'
         time: '08-10'
         lane: 4
+        
+  ReservationState:
+    type: array
+    items:
+      type: object
+      properties:
+        lane:
+          type: integer
+          minimum: 1
+          maximum: 8
+        n_users:
+          type: integer
+          minimum: 0
+          maximum: 2

@@ -13,3 +13,6 @@ rsp = requests.post(
 		"time": "08-10"
 	})
 print(rsp.status_code)
+
+rsp = requests.get(f'{basePath}/{api}/pool/rsvs/2023-02-10/08-10')
+print(rsp.status_code, rsp.json())

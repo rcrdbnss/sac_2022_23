@@ -49,7 +49,7 @@ def val_rsv_item(data):
 	return True
 
 
-def val_booking_data(data):
+def val_rsv_data(data):
 	if 'time' not in data.keys():
 		return False
 
@@ -73,23 +73,24 @@ def val_booking_data(data):
 	return True
 
 
-class PoolBookingRes(Resource):
+class UserDateRsvsRes(Resource):
 	def get(self, user, date):
 		if not val_user(user):
 			return None, 404
 		if not val_date(date):
 			return None, 404
-		x = dao.get(user, date)
+		x = dao.get_ud_rsvs(user, date)
 		if x is None:
 			return None, 404
-		details = []
-		for time in x.keys():
-			details.append({
-				'date': date,
-				'time': time,
-				'lane': x[time]
-			})
-		return details, 200
+		#details = []
+		#for time in x.keys():
+		#	details.append({
+		#		'date': date,
+		#		'time': time,
+		#		'lane': x[time]
+		#	})
+		#return details, 200
+		return x
 
 	def post(self, user, date):
 		if not val_user(user):
@@ -97,17 +98,31 @@ class PoolBookingRes(Resource):
 		if not val_date(date):
 			return None, 404
 		data = request.json
-		if not val_booking_data(data):
+		if not val_rsv_data(data):
 			return None, 404
-		x = dao.get(user, date)
+		x = dao.get_ud_rsvs(user, date)
 		if x is not None:
-			if data['time'] in x.keys():
-				return None, 409
+			for y in x:
+				if data['time'] == y['time']:
+					return None, 409
 		if not dao.add(user, date, **data):
 			return None, 412
-		return dao.get(user, date), 201
+		return dao.get_ud_rsvs(user, date), 201
 
-api.add_resource(PoolBookingRes, f'/{basePath}/pool/<string:user>/<string:date>')
+
+class DateTimeRsvsRes(Resource):
+	def get(self, date, time):
+		if not val_date(date):
+			return None, 404
+		if not val_time(time):
+			return None, 404
+		print(date, time)
+		# return dao.get_dt_rsvs(date, time)
+		return [{'lane': x['lane'], 'n_users': len(x['users'])} for x in dao.get_dt_rsvs(date, time)]
+
+
+api.add_resource(UserDateRsvsRes, f'/{basePath}/pool/<string:user>/<string:date>')
+api.add_resource(DateTimeRsvsRes, f'/{basePath}/pool/rsvs/<string:date>/<string:time>')
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=8080, debug=True)

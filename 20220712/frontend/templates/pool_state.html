@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pool state</title>
+	<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<table>
+	<tr>
+		<th>Lane</th>
+		<th>Currently swimming</th>
+	</tr>
+	{% for i in range(1, 9) %}
+		<tr>
+			<td><a href="/pool/{{ date }}/{{ time }}/{{ i }}">{{ i }}</a></td>
+			<td>{{ data[i]|length }}</td>
+		</tr>
+	{% endfor %}
+</table>
+
+</body>
+</html>
