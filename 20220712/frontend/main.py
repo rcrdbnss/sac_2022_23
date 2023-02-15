@@ -9,7 +9,7 @@ def get_pool_state(date, time):
 	data_ = dao.get_dt_rsvs(date, time)
 	data = {}
 	for d_ in data_:
-		data[d_['lane']] = d_['n_users']
+		data[d_['lane']] = d_['users']
 	return render_template('pool_state.html', data=data, date=date, time=time)
 
 

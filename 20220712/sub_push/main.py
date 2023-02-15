@@ -1,4 +1,6 @@
 import base64
+from datetime import datetime
+
 from flask import Flask, request
 from google.cloud import firestore
 import json
@@ -23,11 +25,11 @@ def save_to_db(data):
 	user = data['user']
 	date = data['date']
 	time = data['time']
-	db.collection('bracelet_reqs').document(user).set(
-		{
-			'date': date,
-			'time': time
-		}, merge=True)
+	db.collection('bracelet_reqs').document(str(datetime.now().timestamp())).set({
+		'user': user,
+		'date': date,
+		'time': time
+	}, merge=True)
 
 
 if __name__ == '__main__':

@@ -84,10 +84,22 @@ class DAO:
 		for k, v in rsvs.items():
 			dc = {
 				'lane': k,
-				'n_users': v
+				'users': v
 			}
 			ret.append(dc)
 		return ret
+
+	def get_udt_rsv(self, user, date, time):
+		date_ = field(date)
+		time_ = field(time)
+		doc = self.db.collection(self.col).document(user).get([f'{date_}.{time_}'])
+		if not doc.exists:
+			return None
+		dc = doc.to_dict()
+		if len(dc) > 0:
+			return dc[date_][time_]
+		else:
+			return None
 
 	def get_users(self, date, time, lane):
 		date_ = field(date)
@@ -114,3 +126,4 @@ if __name__ == '__main__':
 	print(dao.get_ud_rsvs("001", "2023-02-10"))
 	print(dao.get_dt_rsvs("2023-02-10", "08-10"))
 	print(dao.get_users("2023-02-10", "08-10", 3))
+	print(dao.get_udt_rsv("000", "2023-02-15", "08-10"))

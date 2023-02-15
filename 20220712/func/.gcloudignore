@@ -4,5 +4,6 @@
 .env/
 /setup.cfg
 credentials.json
-*.sh
+data.json
+deploy.sh
 *.pdf
