@@ -9,9 +9,10 @@ app = Flask(__name__)
 api = Api(app)
 basePath = 'api/v1'
 dao = DAO()
+DATE_FMT = '%d-%m-%Y'
 
 
-def val_date(date_string: str, format='%Y-%m-%d') -> bool:
+def val_date(date_string: str, format=DATE_FMT) -> bool:
 	try:
 		datetime.strptime(date_string, format)
 		return True
@@ -26,28 +27,37 @@ def val_uuid(uuid_string, version=4) -> bool:
 	except ValueError:
 		return False
 
+
 def val_body(data):
+	if 'value' not in data.keys():
+		return False
+
+	value = data['value']
+	if not isinstance(value, int):
+		return False
 	return True
 
 
 class Res(Resource):
-	def get(self):
-		if not False:
+	def get(self, date: str):
+		if not val_date(date):
 			return None, 404
-		x = dao.get()
-		if s in None:
+		date = datetime.strptime(date, DATE_FMT)
+		x = dao.get(date)
+		if x is None:
 			return None, 404
 		return x, 200
 
-	def post(self):
-		if not False:
+	def post(self, date: str):
+		if not val_date(date):
 			return None, 400
 		data = request.json
 		if not val_body(data):
 			return None, 400
-		if dao.get() is not None:
+		date = datetime.strptime(date, DATE_FMT)
+		if dao.get_if_exists(date) is not None:
 			return None, 409
-		dao.add()
+		dao.add(date, **data)
 		return None, 200
 
 
@@ -57,7 +67,7 @@ class CleanRes(Resource):
 		return None, 200
 
 
-api.add_resource(Res, f'/{basePath}/')
+api.add_resource(Res, f'/{basePath}/consumi/<string:date>')
 api.add_resource(CleanRes, f'/{basePath}/clean')
 
 if __name__ == '__main__':
