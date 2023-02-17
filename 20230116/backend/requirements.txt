@@ -3,3 +3,4 @@ flask-restful
 google-cloud-firestore
 gunicorn
 numpy
+python-dateutil

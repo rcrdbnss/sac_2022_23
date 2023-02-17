@@ -1,2 +1,4 @@
 flask
 google-cloud-firestore
+numpy
+python-dateutil

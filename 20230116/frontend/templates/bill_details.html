@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio bolletta</title>
+</head>
+<body>
+<h1>Dettaglio bolletta emessa in data: {{ emit_date }}</h1>
+<ul>
+    <li>Periodo: {{ bill.start_date }} -> {{ bill.end_date }}</li>
+    <li>Ultima lettura considerata: {{ bill.last_read_date }}</li>
+    <li>Consumi stimati nel periodo considerato: {{ bill.month_consum }}</li>
+    <li>Importo complessivo: {{ bill.amount }}</li>
+</ul>
+</body>
+</html>

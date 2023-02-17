@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ultime bollette</title>
+	<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<h1>Ultime 12 bollette</h1>
+<ul>
+{% for d in bill_dates %}
+<li><a href="/bolletta/{{ d }}">{{ d }}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>

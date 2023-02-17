@@ -43,7 +43,7 @@ class Res(Resource):
 		if not val_date(date):
 			return None, 404
 		date = datetime.strptime(date, DATE_FMT)
-		x = dao.get(date)
+		x = dao.get_read(date)
 		if x is None:
 			return None, 404
 		return x, 200
@@ -55,9 +55,9 @@ class Res(Resource):
 		if not val_body(data):
 			return None, 400
 		date = datetime.strptime(date, DATE_FMT)
-		if dao.get_if_exists(date) is not None:
+		if dao.get_read_if_exists(date) is not None:
 			return None, 409
-		dao.add(date, **data)
+		dao.add_read(date, **data)
 		return None, 200
 
 
