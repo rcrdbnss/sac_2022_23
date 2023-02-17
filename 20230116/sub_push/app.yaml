@@ -1,8 +1,0 @@
-runtime: python39
-
-handlers:
-  - url: /.*
-    script: auto
-
-env_variables:
-  TOKEN: 'zxcvtoken'

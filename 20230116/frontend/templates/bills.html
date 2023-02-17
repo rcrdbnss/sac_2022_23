@@ -6,9 +6,9 @@
 	<link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-<h1>Ultime 12 bollette</h1>
+<h1>Ultime {{ emit_dates|length }} bollette</h1>
 <ul>
-{% for d in bill_dates %}
+{% for d in emit_dates %}
 <li><a href="/bolletta/{{ d }}">{{ d }}</a></li>
 {% endfor %}
 </ul>

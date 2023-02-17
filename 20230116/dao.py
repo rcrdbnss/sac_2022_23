@@ -16,10 +16,10 @@ class DAO:
         self.__reads_col = self.__db.collection('readings')
         self.__bills_col = self.__db.collection('bills')
 
-        self.__dates = []
+        self.__read_dates = []
         for doc in self.__reads_col.list_documents():
-            self.__dates.append(datetime.strptime(doc.id, DAO.IN_DATE_FMT))
-        self.__dates = set(self.__dates)
+            self.__read_dates.append(datetime.strptime(doc.id, DAO.IN_DATE_FMT))
+        self.__read_dates = set(self.__read_dates)
 
     def add_read(self, date: datetime, value: int):
         date_ = date.strftime(DAO.IN_DATE_FMT)
@@ -27,10 +27,10 @@ class DAO:
             "value": value,
             "isInterpolated": False
         })
-        self.__dates.add(date)
+        self.__read_dates.add(date)
 
     def get_last_read_dates(self, date: datetime, n=1) -> list[datetime]:
-        arr = np.array(list(self.__dates))
+        arr = np.array(list(self.__read_dates))
         arr = np.sort(arr[arr <= date])
         n_ = np.min([len(arr), n])
         return arr[-n_:].tolist()
@@ -59,14 +59,14 @@ class DAO:
                 'isInterpolated': True
             }
 
-    def set_bill(self, year: int, month: int):
+    def set_bill_by_ref_month(self, year: int, month: int):
         """
         Args:
             year: anno di riferimento (non di emissione)
             month: mese di riferimento (non di emissione)
         """
         start_date = datetime(year=year, month=month, day=1)
-        bill_date = start_date + relativedelta(months=1)
+        emit_date = start_date + relativedelta(months=1)
         end_date = start_date + relativedelta(days=-1)
         last_read_date = self.get_last_read_dates(end_date)[0]
 
@@ -75,7 +75,7 @@ class DAO:
 
         month_consum = end_read - start_read
         amount = month_consum * DAO.KWH_PRICE
-        self.__bills_col.document(bill_date.strftime(DAO.IN_DATE_FMT)).set({
+        self.__bills_col.document(emit_date.strftime(DAO.IN_DATE_FMT)).set({
             'amount': amount,
             'start_date': start_date.strftime(DAO.HR_DATE_FMT),
             'end_date': end_date.strftime(DAO.HR_DATE_FMT),
@@ -97,14 +97,13 @@ class DAO:
         Returns:
 
         """
-        self.set_bill(year, month)
+        self.set_bill_by_ref_month(year, month)
         start_date = datetime(year=year, month=month, day=1)
-        bill_date = start_date + relativedelta(months=1)
-        return self.get_bill_by_emit_date(bill_date)
+        emit_date = start_date + relativedelta(months=1)
+        return self.get_bill_by_emit_date(emit_date)
 
     def get_bill_by_emit_date(self, emit_date: datetime):
         return self.__bills_col.document(emit_date.strftime(DAO.IN_DATE_FMT)).get().to_dict()
-
 
     def clean(self):
         for d in self.__reads_col.list_documents():

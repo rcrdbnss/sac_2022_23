@@ -16,4 +16,4 @@ def update_bills(data, context):
     # db = firestore.Client()
 
     date = datetime.strptime(date, DAO.IN_DATE_FMT)
-    dao.set_bill(date.year, date.month)
+    dao.set_bill_by_ref_month(date.year, date.month)
