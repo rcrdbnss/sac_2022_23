@@ -9,8 +9,8 @@
 <ul>
     <li>Periodo: {{ bill.start_date }} -> {{ bill.end_date }}</li>
     <li>Ultima lettura considerata: {{ bill.last_read_date }}</li>
-    <li>Consumi stimati nel periodo considerato: {{ bill.month_consum }}</li>
-    <li>Importo complessivo: {{ bill.amount }}</li>
+    <li>Consumi stimati nel periodo considerato: {{ bill.month_consum | round(2) }} KWh</li>
+    <li>Importo complessivo: {{ bill.amount | round(2) }}€</li>
 </ul>
 </body>
 </html>

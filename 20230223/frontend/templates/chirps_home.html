@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<form method="post">
+    {{ message_form.message.label }}
+    {{ message_form.message }}
+    <br/>
+	<input name="message_form" type="submit" value="Send">
+</form>
+
+<form method="post">
+    {{ hashtag_form.hashtag.label }}
+    {{ hashtag_form.hashtag }}
+    <br/>
+	<input name="hashtag_form" type="submit" value="Send">
+</form>
+</body>
+</html>

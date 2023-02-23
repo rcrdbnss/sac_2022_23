@@ -9,7 +9,7 @@ from google.cloud import firestore
 class DAO:
     KWH_PRICE = 0.5
     IN_DATE_FMT = '%Y%m%d'
-    HR_DATE_FMT = '%d-%m-%Y'
+    # HR_DATE_FMT = '%d-%m-%Y'
 
     def __init__(self):
         self.__db = firestore.Client()
@@ -53,7 +53,9 @@ class DAO:
                 r2 = self.get_read_if_exists(d2)['value']
                 rx = r2 + (r2 - r1) / (d2 - d1).total_seconds() * (date - d2).total_seconds()
             elif len(ld) == 1:
-                rx = self.get_read_if_exists(ld[0])['value']
+                r = self.get_read_if_exists(ld[0])
+                if r is not None:
+                    rx = r['value']
             return {
                 'value': rx,
                 'isInterpolated': True
@@ -67,7 +69,7 @@ class DAO:
         """
         start_date = datetime(year=year, month=month, day=1)
         emit_date = start_date + relativedelta(months=1)
-        end_date = start_date + relativedelta(days=-1)
+        end_date = emit_date + relativedelta(days=-1)
         last_read_date = self.get_last_read_dates(end_date)[0]
 
         start_read = self.get_read(start_date)['value']
@@ -77,9 +79,9 @@ class DAO:
         amount = month_consum * DAO.KWH_PRICE
         self.__bills_col.document(emit_date.strftime(DAO.IN_DATE_FMT)).set({
             'amount': amount,
-            'start_date': start_date.strftime(DAO.HR_DATE_FMT),
-            'end_date': end_date.strftime(DAO.HR_DATE_FMT),
-            'last_read_date': last_read_date.strftime(DAO.HR_DATE_FMT),
+            'start_date': start_date, #.strftime(DAO.HR_DATE_FMT),
+            'end_date': end_date, #.strftime(DAO.HR_DATE_FMT),
+            'last_read_date': last_read_date, #.strftime(DAO.HR_DATE_FMT),
             'month_consum': month_consum
         })
 

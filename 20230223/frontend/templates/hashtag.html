@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hashtag</title>
+</head>
+<body>
+{% if messages %}
+    <ul>
+    {% for m in messages %}
+        <li>{{ m.message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+</body>
+</html>
