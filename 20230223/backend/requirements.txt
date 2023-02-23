@@ -1,4 +1,5 @@
 flask
 flask-restful
 google-cloud-firestore
+google-cloud-pubsub
 gunicorn

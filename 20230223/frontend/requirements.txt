@@ -1,3 +1,4 @@
 flask
 google-cloud-firestore
+google-cloud-pubsub
 wtforms

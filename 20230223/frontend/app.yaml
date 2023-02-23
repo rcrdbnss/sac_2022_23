@@ -6,3 +6,6 @@ handlers:
   - url: /.*
     secure: always
     script: auto
+
+env_variables:
+  PROJECT_ID: "rcbns-20230223"

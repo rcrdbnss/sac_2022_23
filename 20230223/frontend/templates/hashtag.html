@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Hashtag</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+<h1>Chirps about #{{ hashtag }}</h1>
 {% if messages %}
     <ul>
     {% for m in messages %}

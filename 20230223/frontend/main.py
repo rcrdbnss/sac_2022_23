@@ -33,7 +33,7 @@ def get_hashtag(ht):
         for m in ms:
             messages.append(dao.get_message(uuid.UUID(m)))
     session['messages'] = messages
-    return render_template('hashtag.html', messages=session['messages'])
+    return render_template('hashtag.html', messages=session['messages'], hashtag=ht)
 
 
 def get_chirps():
