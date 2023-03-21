@@ -1,0 +1,167 @@
+swagger: "2.0"
+
+info:
+  version: "1.0"
+  title: "SecretSanta"
+  description: "Create your own Secret Santa!"
+
+host: "[YOUR-PROJECT-ID].appspot.com"
+basePath: "/api/v1"
+
+schemes:
+  - https
+
+paths:
+  /clean:
+    get:
+      description: "Clean the database"
+      operationId: "CleanDB"
+      responses:
+        200: 
+          description: "Ok"
+  /create_santa/{email}:
+    parameters:
+      - name: email
+        in: path
+        required: true
+        description: "Email address of the Secret Santa creator"
+        type: string
+        format: email
+    post:
+      description: "Insert the name and the partecipants of the Secret Santa"
+      operationId: "CreateSantaPost"
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: SantaConfig
+          required: True
+          description: "Configuration and details of the Secret Santa instance"
+          schema:
+            $ref: "#/definitions/SantaConfig"
+      responses:
+        201:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/SantaConfirm"
+        400:
+          description: "Generic error"
+        412:
+          description: "Error: Too many Secret Santa requested by the same user"
+          
+  /generate/{santa_id}:
+    parameters:
+      - name: santa_id
+        in: path
+        required: true
+        description: "UUID of the Secret Santa entry"
+        type: string
+        format: uuid
+    get:
+      description: "Get the list of Secret Santas"
+      operationId: "GenerateSantaGet"
+      responses:
+        200:
+          description: "Success."
+          schema:
+            $ref: "#/definitions/SantaExtraction"
+        404:
+          description: "Generic error"
+
+  /secrets/{giver}:
+    parameters:
+      - name: giver
+        in: path
+        required: true
+        description: "Name of the giver"
+        type: string
+    get:
+      description: "Get the list of the Giver's Receivers"
+      operationId: "GetSecretSantas"
+      responses:
+        200:
+          description: "Success."
+          schema:
+            $ref: "#/definitions/ReceiverList"
+        404:
+          description: "Generic error"
+
+definitions:
+  SantaConfirm:
+    type: object
+    required:
+      - uuid
+      - name
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      name:
+        type: string
+    example:
+      uuid: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+      name: "SAC Secret Santa"
+      
+  SantaConfig:
+    type: object
+    required:
+      - name
+      - extraction-date
+      - partecipants
+    properties:
+      name: 
+        type: string
+      extraction-date:
+        type: string
+        format: date-time
+      partecipants:
+        type: array
+        items:
+          type: string
+    example:
+      name: "SAC Secret Santa"
+      extraction-date: "2021-12-21T13:00:00Z"
+      partecipants:
+        - "Michele Colajanni"
+        - "Riccardo Lancellotti"
+        - "Mirco Marchetti"
+        - "Dario Stabili"
+  SantaExtraction:
+    type: object
+    required:
+      - santas
+    properties:
+      santas:
+        type: array
+        items:
+          type: object
+          properties:
+            from:
+              type: string
+            to:
+              type: string
+    example:
+      santas:
+        - from: 'Michele Colajanni'
+          to: 'Riccardo Lancellotti'
+        - from: 'Riccardo Lancellotti'
+          to: 'Mirco Marchetti'
+        - from: 'Mirco Marchetti'
+          to: 'Dario Stabili'
+        - from: 'Dario Stabili'
+          to: 'Michele Colajanni'
+
+  ReceiverList:
+    type: array
+    items:
+      type: object
+      properties:
+        list:
+          type: string
+          format: uuid
+        to:
+          type: string
+      required:
+        - list
+        - to
+  
