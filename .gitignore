@@ -1,7 +1,0 @@
-.env/
-.idea/
-__pycache__/
-
-setup.cfg
-createAuth.sh
-credentials.sh
